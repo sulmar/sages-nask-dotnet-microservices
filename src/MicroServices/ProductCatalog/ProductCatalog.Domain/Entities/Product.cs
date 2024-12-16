@@ -10,4 +10,14 @@ internal class Product  : BaseEntity
 {    
     public string Name { get; set; }
     public decimal Price { get; set; }
+    public decimal DiscountedPrice { get; set; }
+
+    public Product(int id, string name, decimal price, decimal discountedPrice = 0) 
+        : base(id)
+        
+    {
+        Name = name;
+        Price = price;
+        DiscountedPrice = discountedPrice;
+    }
 }

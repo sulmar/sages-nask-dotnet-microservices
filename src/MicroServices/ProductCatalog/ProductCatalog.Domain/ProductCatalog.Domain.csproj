@@ -8,6 +8,7 @@
 
 	<ItemGroup>
 		<InternalsVisibleTo Include="ProductCatalog.Api" />
+		<InternalsVisibleTo Include="ProductCatalog.Infrastructure"/>
 	</ItemGroup>
 
 </Project>
