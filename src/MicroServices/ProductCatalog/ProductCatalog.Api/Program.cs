@@ -1,3 +1,4 @@
+using FastEndpoints;
 using ProductCatalog.Domain.Abstractions;
 using ProductCatalog.Domain.Entities;
 using ProductCatalog.Infrastructure;
@@ -35,6 +36,8 @@ builder.Services.AddCors(options => options.AddDefaultPolicy(policy =>
 }));
 
 
+builder.Services.AddFastEndpoints();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -48,8 +51,10 @@ app.UseHttpsRedirection();
 
 app.UseCors();
 
-app.MapGet("api/products", async (IProductRepository repository) => await repository.GetAllAsync());
+//app.MapGet("api/products", async (IProductRepository repository) => await repository.GetAllAsync());
+// app.MapGet("api/products/{id:int}", async(int id, IProductRepository repository) => await repository.GetAsync(id));
 
+app.MapFastEndpoints();
 
 app.Run();
 
