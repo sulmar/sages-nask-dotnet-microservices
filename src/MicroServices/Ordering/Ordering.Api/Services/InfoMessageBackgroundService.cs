@@ -26,7 +26,9 @@ public class InfoMessageBackgroundService(IHubContext<OrderingHub> hubContext) :
 
             var info = faker.Generate();
 
-            await hubContext.Clients.All.SendAsync("ReceiveMessage", info);
+            // await hubContext.Clients.All.SendAsync("ReceiveMessage", info);
+
+            await hubContext.Clients.Group("GroupA").SendAsync("ReceiveMessage", info);
 
 
         }
