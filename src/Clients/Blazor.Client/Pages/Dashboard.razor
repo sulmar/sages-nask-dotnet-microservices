@@ -33,9 +33,9 @@
     protected override async Task OnInitializedAsync()
     {
         connection = new HubConnectionBuilder()
-        //   .WithUrl(Navigation.ToAbsoluteUri("/signalr/ordering"))
-        .WithUrl("https://localhost:7087/signalr/ordering")
-        .Build();
+           .WithUrl(Navigation.ToAbsoluteUri("/signalr/ordering"))
+           .WithAutomaticReconnect()           
+           .Build();           
 
         connection.On<Info>("ReceiveMessage", info =>
         {
