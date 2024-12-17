@@ -17,7 +17,7 @@
                 <!-- Product name-->
                 <h5 class="fw-bolder">@Product.Name</h5>
                 <!-- Product price-->
-                @if(Product.IsSale)
+                @if (Product.IsSale)
                 {
                     <span class="text-muted text-decoration-line-through">$@Product.Price</span>
                 }
@@ -32,10 +32,10 @@
 </div>
 
 @code {
-   
+
     [Parameter, Required]
     public Product Product { get; set; }
-    
+
     private int cartCount = 0;
 
     private async Task AddToCart()
@@ -44,10 +44,10 @@
         cartCount++;
         // You can perform additional actions here, like updating a shopping cart or calling a service
         Console.WriteLine("Product added to cart. Current cart count: " + cartCount);
-        
+
         try
-        {            
-            var response = await Http.PostAsJsonAsync("api/cart", Product);
+        {
+            var response = await Http.PostAsJsonAsync("api/cart", new { ProductName = Product.Name });
             if (response.IsSuccessStatusCode)
             {
                 // Optionally, update UI or provide feedback to user
@@ -65,5 +65,5 @@
             Console.WriteLine($"Error adding product to cart: {ex.Message}");
         }
     }
-    
+
 }
