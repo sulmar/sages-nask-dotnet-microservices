@@ -1,24 +1,13 @@
 ﻿using ProductCatalog.Api.DTOs;
 using ProductCatalog.Domain.Entities;
+using Riok.Mapperly.Abstractions;
 
 namespace ProductCatalog.Api.Mappers;
 
-internal class ProductMapper
+[Mapper]
+internal partial class ProductMapper
 {
-    public ProductDTO Map(Product product)
-    {
-        var dto = new ProductDTO
-        {
-            Id = product.Id,
-            Name = product.Name,
-            Price = product.Price,
-        };
-
-        return dto;
-    }
-
-    public Product Map(ProductDTO dto)
-    {
-        throw new NotImplementedException();
-    }
+    internal partial ProductDTO Map(Product product);
+    
+    internal partial Product Map(ProductDTO dto);
 }

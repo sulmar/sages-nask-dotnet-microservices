@@ -1,6 +1,6 @@
 ﻿namespace ProductCatalog.Api.DTOs;
 
-public class ProductDTO
+internal class ProductDTO
 {
     public int Id { get; set; }
     public string Name { get; set; }

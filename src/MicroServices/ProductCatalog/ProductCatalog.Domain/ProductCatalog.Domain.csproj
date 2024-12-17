@@ -9,6 +9,7 @@
 	<ItemGroup>
 		<InternalsVisibleTo Include="ProductCatalog.Api" />
 		<InternalsVisibleTo Include="ProductCatalog.Infrastructure"/>
+		<InternalsVisibleTo Include="Riok.Mapperly"/>
 	</ItemGroup>
 
 </Project>
