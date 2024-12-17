@@ -1,5 +1,11 @@
 ﻿@page "/dashboard"
 @using BlazorApp.Components
+@using BlazorApp.Model
+@using Microsoft.AspNetCore.SignalR.Client
+@using Shared.Models
+@inject NavigationManager Navigation
+@implements IAsyncDisposable
+
 
 <PageTitle>Dashboard</PageTitle>
 
@@ -8,11 +14,11 @@
     <div class="container px-4 px-lg-5 mt-5">
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
 
-            
-            <MetricRectangle Title="Total Sales" Value="$1,234" BackgroundColor="#28a745" TextColor="#fff" />
-            <MetricRectangle Title="New Users" Value="567" BackgroundColor="#007bff" TextColor="#fff" />
-            <MetricRectangle Title="Active Sessions" Value="89" BackgroundColor="#ffc107" TextColor="#000" />
-            
+
+            <MetricRectangle Title="Total Sales" Value="@Info.TotalSales.ToString()" BackgroundColor="#28a745" TextColor="#fff" />
+            <MetricRectangle Title="New Users" Value="@Info.NewUsers.ToString()" BackgroundColor="#007bff" TextColor="#fff" />
+            <MetricRectangle Title="Active Sessions" Value="@Info.ActiveSessions.ToString()" BackgroundColor="#ffc107" TextColor="#000" />
+
         </div>
     </div>
 </section>
@@ -20,5 +26,30 @@
 
 
 @code {
+    private HubConnection connection;
 
+    private Info Info = new Info(1, 2, 3);
+
+    protected override async Task OnInitializedAsync()
+    {
+        connection = new HubConnectionBuilder()
+        //   .WithUrl(Navigation.ToAbsoluteUri("/signalr/ordering"))
+        .WithUrl("https://localhost:7087/signalr/ordering")
+        .Build();
+
+        connection.On<Info>("ReceiveMessage", info =>
+        {
+            Info = info;
+
+            InvokeAsync(StateHasChanged);
+        });
+
+        await connection.StartAsync();
+    }
+
+
+    public async ValueTask DisposeAsync()
+    {
+        await connection.StopAsync();
+    }
 }
