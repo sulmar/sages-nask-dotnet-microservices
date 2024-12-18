@@ -60,6 +60,7 @@ builder.Services.AddAuthorizationBuilder()
 
 
 builder.Services.AddTransient<IAuthorizationHandler, AdultAuthorizationHandler>();
+builder.Services.AddTransient<IAuthorizationHandler, ProductOwnerAuthorizationHandler>();
 
 var app = builder.Build();
 

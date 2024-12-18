@@ -1,11 +1,13 @@
 ﻿using FastEndpoints;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
+using ProductCatalog.Api.Authorization;
 using ProductCatalog.Domain.Abstractions;
 using ProductCatalog.Domain.Entities;
 
 namespace ProductCatalog.Api.Endpoints.Products;
 
-internal class GetById(IProductRepository repository) : EndpointWithoutRequest<Results<Ok<Product>, NotFound>>
+internal class GetById(IProductRepository repository, IAuthorizationService _authorizationService) : EndpointWithoutRequest<Results<Ok<Product>, NotFound>>
 {
     public override void Configure()
     {
@@ -18,6 +20,14 @@ internal class GetById(IProductRepository repository) : EndpointWithoutRequest<R
         int id = Route<int>("id", isRequired: true);
 
         var product = await repository.GetAsync(id);
+
+        var authorizationResult = await _authorizationService.AuthorizeAsync(User, product, new ProductOwnerRequirement());
+
+        if (!authorizationResult.Succeeded)
+        {
+            await SendForbiddenAsync();
+        }
+        
 
         if (product == null)
         {
