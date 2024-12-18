@@ -1,5 +1,6 @@
 ﻿@using BlazorApp.Model
 @inject HttpClient Http
+@inject Blazored.LocalStorage.ILocalStorageService Storage
 
 <form class="d-flex align-items-center m-3" @onsubmit="HandleLogin">
     <div class="me-2">
@@ -29,10 +30,12 @@
 
         if (response.IsSuccessStatusCode)
         {
-            string token = await response.Content.ReadAsStringAsync();
+            var tokenResponse = await response.Content.ReadFromJsonAsync<TokenResponse>();
 
-            Console.WriteLine(token);
+            Console.WriteLine(tokenResponse.AccessToken);
             // Handle successful login, e.g., navigate to another page
+
+            await Storage.SetItemAsStringAsync("access-token", tokenResponse.AccessToken);
         }
         else
         {

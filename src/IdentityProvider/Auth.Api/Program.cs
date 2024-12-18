@@ -23,15 +23,22 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 
-app.MapPost("api/login", (LoginRequest request, ITokenService tokenService) =>
+app.MapPost("api/login", (LoginRequest request, ITokenService tokenService, HttpContext context) =>
 {
-    if (request.Username == "john" && request.Password == "123")
-    {
-        var identity = new UserIdentity { Username = "john", FirstName = "John", LastName = "Smith", Email = "john@domain.com" };
+if (request.Username == "john" && request.Password == "123")
+{
+    var identity = new UserIdentity { Username = "john", FirstName = "John", LastName = "Smith", Email = "john@domain.com" };
 
-        var accessToken = tokenService.CreateAccessToken(identity);
+    var accessToken = tokenService.CreateAccessToken(identity);
 
-        return Results.Ok(accessToken);
+        context.Response.Cookies.Append("access-token", accessToken, new CookieOptions
+        {
+            HttpOnly = true, // blokuje dostêp z js do document.cookie
+            Secure = true,
+            Expires = DateTimeOffset.UtcNow.AddMinutes(15)
+        });
+
+        return Results.Ok(new { AccessToken = accessToken });
     }
 
     return Results.Unauthorized();
