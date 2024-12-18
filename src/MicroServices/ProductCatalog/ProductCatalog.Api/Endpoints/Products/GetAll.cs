@@ -10,6 +10,7 @@ internal class GetAll(IProductRepository repository) : EndpointWithoutRequest<IE
     {
         Get("/api/products");
         Policies("gold");
+        Roles("developer");
     }
 
 

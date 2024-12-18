@@ -17,6 +17,7 @@ public class JwtTokenService : ITokenService
 
         var claims = new Claim[]
         {
+            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             new Claim(JwtRegisteredClaimNames.Sub, "public_key"),
             new Claim(JwtRegisteredClaimNames.Exp, new DateTimeOffset(expiration_time).ToUnixTimeSeconds().ToString()),
             new Claim(JwtRegisteredClaimNames.Email, identity.Email),
@@ -24,8 +25,6 @@ public class JwtTokenService : ITokenService
             new Claim(JwtRegisteredClaimNames.GivenName, identity.FirstName),
             new Claim(JwtRegisteredClaimNames.FamilyName, identity.LastName),
             new Claim(JwtRegisteredClaimNames.Birthdate, identity.Birthday.ToString()),
-            new Claim(ClaimTypes.Role, "admin"),
-            new Claim(ClaimTypes.Role, "developer")
         };
 
 

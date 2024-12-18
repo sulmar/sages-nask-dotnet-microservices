@@ -1,5 +1,6 @@
 using FastEndpoints;
 using FastEndpoints.Security;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using ProductCatalog.Api.Authorization;
 using ProductCatalog.Domain.Abstractions;
@@ -55,12 +56,14 @@ builder.Services.AddAuthorizationBuilder()
         policy.RequireAuthenticatedUser();
         policy.RequireClaim(JwtRegisteredClaimNames.Birthdate);
         policy.RequireClaim(JwtRegisteredClaimNames.Email);
-        policy.Requirements.Add(new AgeAuthorizationRequirement(29));
+        policy.Requirements.Add(new AgeAuthorizationRequirement(18));        
     });
 
 
 builder.Services.AddTransient<IAuthorizationHandler, AdultAuthorizationHandler>();
 builder.Services.AddTransient<IAuthorizationHandler, ProductOwnerAuthorizationHandler>();
+
+builder.Services.AddTransient<IClaimsTransformation, CustomClaimsTransformation>();
 
 var app = builder.Build();
 
@@ -75,12 +78,12 @@ app.UseHttpsRedirection();
 
 app.UseCors();
 
-//app.MapGet("api/products", async (IProductRepository repository) => await repository.GetAllAsync());
-// app.MapGet("api/products/{id:int}", async(int id, IProductRepository repository) => await repository.GetAsync(id));
-
-
 app.UseAuthentication();
 app.UseAuthorization();
+
+// app.MapGet("api/products", async (IProductRepository repository) => await repository.GetAllAsync());
+// app.MapGet("api/products/{id:int}", async(int id, IProductRepository repository) => await repository.GetAsync(id));
+
 
 app.MapFastEndpoints();
 
