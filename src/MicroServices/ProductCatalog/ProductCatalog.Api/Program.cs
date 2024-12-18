@@ -1,7 +1,10 @@
 using FastEndpoints;
+using FastEndpoints.Security;
 using ProductCatalog.Domain.Abstractions;
 using ProductCatalog.Domain.Entities;
 using ProductCatalog.Infrastructure;
+using System.Security.Claims;
+using System.Security.Principal;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +17,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IProductRepository, FakeProductRepository>();
 builder.Services.AddSingleton<Context>(sp =>
 {
-    List<Product> products =[
+    List<Product> products = [
         new Product(1, "Popular Product", 80.00m),
         new Product(2, "Special Item", 80.00m, 50m),
         new Product(3, "Extra Product", 80.00m),
@@ -37,7 +40,11 @@ builder.Services.AddCors(options => options.AddDefaultPolicy(policy =>
 }));
 
 
+string privateKey = "your_secret_key_your_secret_key_your_secret_key";
+
 builder.Services.AddFastEndpoints();
+builder.Services.AddAuthenticationJwtBearer(options => options.SigningKey = privateKey);
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
@@ -54,6 +61,10 @@ app.UseCors();
 
 //app.MapGet("api/products", async (IProductRepository repository) => await repository.GetAllAsync());
 // app.MapGet("api/products/{id:int}", async(int id, IProductRepository repository) => await repository.GetAsync(id));
+
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapFastEndpoints();
 

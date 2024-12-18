@@ -43,6 +43,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ordering.Infrastructure", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Models", "Shared\Shared.Models\Shared.Models.csproj", "{12C77D42-7959-429B-A216-883E75A92D9C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auth.Api", "IdentityProvider\Auth.Api\Auth.Api.csproj", "{D5F786FB-9BF5-4ED6-A4D5-B2B209C636E1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -97,6 +99,10 @@ Global
 		{12C77D42-7959-429B-A216-883E75A92D9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12C77D42-7959-429B-A216-883E75A92D9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{12C77D42-7959-429B-A216-883E75A92D9C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5F786FB-9BF5-4ED6-A4D5-B2B209C636E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5F786FB-9BF5-4ED6-A4D5-B2B209C636E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5F786FB-9BF5-4ED6-A4D5-B2B209C636E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5F786FB-9BF5-4ED6-A4D5-B2B209C636E1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -117,5 +123,6 @@ Global
 		{E5523D89-9F9B-457C-99D3-2BA14A1F009E} = {8DC909AA-7944-4ADF-9E03-FC00EA108C23}
 		{E9C40F48-9864-49F1-B1C5-BC625D7BA037} = {8DC909AA-7944-4ADF-9E03-FC00EA108C23}
 		{12C77D42-7959-429B-A216-883E75A92D9C} = {659B00F9-F6F6-4D37-B18B-CE35EAF6D2F4}
+		{D5F786FB-9BF5-4ED6-A4D5-B2B209C636E1} = {0A659B6D-BC61-4326-ACFF-44C6C59CAE52}
 	EndGlobalSection
 EndGlobal

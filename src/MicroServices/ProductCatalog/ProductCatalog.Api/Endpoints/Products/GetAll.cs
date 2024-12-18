@@ -8,7 +8,6 @@ internal class GetAll(IProductRepository repository) : EndpointWithoutRequest<IE
 {
     public override void Configure()
     {
-        AllowAnonymous();
         Get("/api/products");
     }
 
