@@ -23,6 +23,9 @@ public class JwtTokenService : ITokenService
             new Claim(JwtRegisteredClaimNames.Name, identity.Username),
             new Claim(JwtRegisteredClaimNames.GivenName, identity.FirstName),
             new Claim(JwtRegisteredClaimNames.FamilyName, identity.LastName),
+            new Claim(JwtRegisteredClaimNames.Birthdate, identity.Birthday.ToString()),
+            new Claim(ClaimTypes.Role, "admin"),
+            new Claim(ClaimTypes.Role, "developer")
         };
 
 

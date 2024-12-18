@@ -27,7 +27,7 @@ app.MapPost("api/login", (LoginRequest request, ITokenService tokenService, Http
 {
 if (request.Username == "john" && request.Password == "123")
 {
-    var identity = new UserIdentity { Username = "john", FirstName = "John", LastName = "Smith", Email = "john@domain.com" };
+    var identity = new UserIdentity { Username = "john", FirstName = "John", LastName = "Smith", Email = "john@domain.com", Birthday = DateTime.Parse("2000-12-01") };
 
     var accessToken = tokenService.CreateAccessToken(identity);
 

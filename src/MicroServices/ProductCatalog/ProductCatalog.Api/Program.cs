@@ -1,8 +1,11 @@
 using FastEndpoints;
 using FastEndpoints.Security;
+using Microsoft.AspNetCore.Authorization;
+using ProductCatalog.Api.Authorization;
 using ProductCatalog.Domain.Abstractions;
 using ProductCatalog.Domain.Entities;
 using ProductCatalog.Infrastructure;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Principal;
 
@@ -45,6 +48,18 @@ string privateKey = "your_secret_key_your_secret_key_your_secret_key";
 builder.Services.AddFastEndpoints();
 builder.Services.AddAuthenticationJwtBearer(options => options.SigningKey = privateKey);
 builder.Services.AddAuthorization();
+
+builder.Services.AddAuthorizationBuilder()
+    .AddPolicy("gold", policy =>
+    {
+        policy.RequireAuthenticatedUser();
+        policy.RequireClaim(JwtRegisteredClaimNames.Birthdate);
+        policy.RequireClaim(JwtRegisteredClaimNames.Email);
+        policy.Requirements.Add(new AgeAuthorizationRequirement(29));
+    });
+
+
+builder.Services.AddTransient<IAuthorizationHandler, AdultAuthorizationHandler>();
 
 var app = builder.Build();
 

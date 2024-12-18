@@ -9,6 +9,7 @@ internal class GetAll(IProductRepository repository) : EndpointWithoutRequest<IE
     public override void Configure()
     {
         Get("/api/products");
+        Policies("gold");
     }
 
 
